@@ -92,7 +92,7 @@ QString gracz::getName()
     return name;
 }
 
-void gracz::obstawClicked(int postawione)
+void gracz::obstaw(int postawione)
 {
     QWidget *okna = new QWidget;
     okna->show();

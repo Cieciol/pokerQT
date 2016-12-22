@@ -9,7 +9,7 @@
 #include <QLabel>
 #include <QPushButton>
 #include <QSlider>
-#include "nadpisane_obiekty_qt.h"
+//#include "nadpisane_obiekty_qt.h"
 
 //tltlt
 
@@ -47,7 +47,7 @@ public:
     QLabel *karta5Stol;
 
     QPushButton *czekaj;
-    obstawButton *obstaw;
+    QPushButton *obstaw;
     QPushButton *pasuj;
     QPushButton *sprawdz;
     QPushButton *przebij;
@@ -56,9 +56,8 @@ public:
     QLabel *karta2Gracza;
     QSlider *suwak;
 
-
-
-
+    gracz *wskPlayer;
+    krupier *wskKrupier;
 
 
 
@@ -69,6 +68,7 @@ private slots:
 
     void on_rozpocznij_gre_clicked();
     void on_ok_clicked();
+    void obstawClicked();
 
 
 private:

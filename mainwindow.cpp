@@ -9,8 +9,7 @@
 #include <QButtonGroup>
 #include "moj_poker.h"
 #include "moj_poker.cpp"
-//#include "nadpisane_obiekty_qt.h"
-//#include "nadpisane_obiekty_qt.cpp"
+
 
 #define smallBid 10
 #define bigBid 20
@@ -44,6 +43,8 @@ void MainWindow::on_ok_clicked()
     tasuj(tali);
     krupier krupier;
     gracz player(imiewsk->text(),false);
+    wskPlayer = &player;
+    wskKrupier = &krupier;
 
     start_okna(gracz1,gracz2,gracz3,gracz4,tali,krupier,player);
     start_gry(gracz1,gracz2,gracz3,gracz4,tali,krupier,player);
@@ -86,6 +87,13 @@ void MainWindow::on_rozpocznij_gre_clicked()
 
 }
 
+void MainWindow::obstawClicked()
+{
+    int postawione = suwak->value();
+    wskPlayer->obstaw(postawione);
+    wPuli->update();
+    kasaGracza->update();
+}
 
 void MainWindow::start_okna(gracz &gracz1, gracz &gracz2, gracz &gracz3, gracz &gracz4, talia talia, krupier &krupier,gracz &player)
 {
@@ -212,7 +220,7 @@ void MainWindow::start_okna(gracz &gracz1, gracz &gracz2, gracz &gracz3, gracz &
     czekaj = new QPushButton("CZEKAJ");
     czekaj->setFlat(1);
     czekaj->setDisabled(1);
-    obstaw = new obstawButton;
+    obstaw = new QPushButton();
     obstaw->setText("OBSTAW");
     obstaw->setFlat(1);
     obstaw->setDisabled(1);
@@ -332,10 +340,8 @@ void pierwszaDecyzjaGracza(QSlider *_suwak,QPushButton *_obstaw, QPushButton *_p
 
 void MainWindow::start_gry(gracz &gracz1, gracz &gracz2, gracz &gracz3, gracz &gracz4, talia &tal, krupier &krupier,gracz &player)
 {
-    //int postawione;
-//    connect(suwak,SIGNAL(valueChanged(int)),obstaw,SLOT(setStanSuwaka(int)));
-//    connect(obstaw,SIGNAL(MOJEclicked(int)),&player,SLOT(obstawClicked(int)));
-//    connect(obstaw,SIGNAL(clicked(int)),kasaGracza,SLOT(setText(QString::number(player.getIloscZetonow()))));
+    connect(obstaw,SIGNAL(clicked()),SLOT(obstawClicked()));
+
 //    connect(obstaw,SIGNAL(clicked()),wPuli,SLOT(setNum(krupier.getIloscZetonow())));
 
     pierwsze_rozdanie(gracz1,gracz2,gracz3, gracz4, tal, player);

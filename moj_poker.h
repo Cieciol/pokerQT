@@ -32,7 +32,7 @@ public:
 
 class gracz : public QObject
 {
-Q_OBJECT
+
 
 private:
 
@@ -54,8 +54,7 @@ public:
     void setCard2(karta card);
     void obstaw(int);
     void podejmijDecyzje();
-public slots:
-    void obstawClicked(int postawione);
+
 
 
 };
@@ -69,7 +68,7 @@ class krupier
 public:
     krupier();
     int getIloscZetonow();
-    friend void gracz::obstawClicked(int postawione);//sloty można zaprzyjaziniać z innymi klasami jak funkcje
+    friend void gracz::obstaw(int);//sloty można zaprzyjaziniać z innymi klasami jak funkcje
     void setStol(karta card);
     QString getCardName();
 
