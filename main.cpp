@@ -22,3 +22,10 @@ int main(int argc, char *argv[])
 }
 
 
+//QDialog *oknoo = new QDialog;
+//QLabel *tekst  = new QLabel;
+//tekst->setNum(wskPlayer->getIloscZetonow());
+//QGridLayout *Lay = new QGridLayout;
+//Lay->addWidget(tekst);
+//oknoo->setLayout(Lay);
+//oknoo->show();

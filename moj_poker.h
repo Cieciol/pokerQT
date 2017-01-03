@@ -30,7 +30,7 @@ public:
 };
 
 
-class gracz : public QObject
+class gracz
 {
 
 

@@ -1,4 +1,4 @@
-#include "mainwindow.h"
+﻿#include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <QWidget>
 #include <QGridLayout>
@@ -7,12 +7,20 @@
 #include <QLineEdit>
 #include <QGroupBox>
 #include <QButtonGroup>
+#include <QDialog>
 #include "moj_poker.h"
 #include "moj_poker.cpp"
 
 
 #define smallBid 10
 #define bigBid 20
+
+void delay(int czasWSekundach)
+{
+    QTime dieTime= QTime::currentTime().addSecs(czasWSekundach);
+    while (QTime::currentTime() < dieTime)
+        QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
+}
 
 
 
@@ -39,15 +47,18 @@ void MainWindow::on_ok_clicked()
     gracz gracz2("KOMPUTER2");
     gracz gracz3("KOMPUTER3");
     gracz gracz4("KOMPUTER4");
-    talia tali;
+    //talia tali;
     tasuj(tali);
-    krupier krupier;
-    gracz player(imiewsk->text(),false);
+    //krupier krupier;
+    //gracz player(imiewsk->text(),false); //nie działa, sloty szaleją konstruktor przeniesiony do mainwindow.h
     wskPlayer = &player;
-    wskKrupier = &krupier;
+    wskKrupier = &krupier1;
+    wskTalia = &tali;
 
-    start_okna(gracz1,gracz2,gracz3,gracz4,tali,krupier,player);
-    start_gry(gracz1,gracz2,gracz3,gracz4,tali,krupier,player);
+
+    start_okna(gracz1,gracz2,gracz3,gracz4,tali,krupier1,player);
+    start_gry(gracz1,gracz2,gracz3,gracz4,tali,krupier1,player);
+
 
 }
 
@@ -80,19 +91,60 @@ void MainWindow::on_rozpocznij_gre_clicked()
 
 
 
-
-
     opcje_uruchamiania->setLayout(ustawienie_elementow);
     opcje_uruchamiania->show();
+
+}
+
+void MainWindow::czekajClicked()
+{
 
 }
 
 void MainWindow::obstawClicked()
 {
     int postawione = suwak->value();
-    wskPlayer->obstaw(postawione);
-    wPuli->update();
-    kasaGracza->update();
+    wskPlayer->obstaw(postawione);//nie rusz tej linijki bo QT mądrzejsze
+    wPuli->setNum(wskKrupier->getIloscZetonow());
+    kasaPoPostawieniu->setNum(wskPlayer->getIloscZetonow());
+    rozdaj3KartyKrupierowi(*wskKrupier,*wskTalia);
+
+}
+
+void MainWindow::pasujClicked()
+{
+    QDialog *oknoo = new QDialog;
+    QLabel *tekst  = new QLabel;
+    tekst->setNum(wskPlayer->getIloscZetonow());
+    QGridLayout *Lay = new QGridLayout;
+    Lay->addWidget(tekst);
+    oknoo->setLayout(Lay);
+    oknoo->show();
+
+}
+
+void MainWindow::sprawdzClicked()
+{
+
+}
+
+void MainWindow::przebijClicked()
+{
+
+}
+
+
+void MainWindow::rozdaj3KartyKrupierowi(krupier _krupier, talia _tal)
+{
+    _krupier.setStol(dajKarte(_tal));
+    delay(1);
+    karta1Stol->setText(_krupier.getCardName());
+    _krupier.setStol(dajKarte(_tal));
+    delay(1);
+    karta2Stol->setText(_krupier.getCardName());
+    _krupier.setStol(dajKarte(_tal));
+    delay(1);
+    karta3Stol->setText(_krupier.getCardName());
 }
 
 void MainWindow::start_okna(gracz &gracz1, gracz &gracz2, gracz &gracz3, gracz &gracz4, talia talia, krupier &krupier,gracz &player)
@@ -235,7 +287,7 @@ void MainWindow::start_okna(gracz &gracz1, gracz &gracz2, gracz &gracz3, gracz &
     przebij->setDisabled(1);
     QLabel *kasaDoPostawienia = new QLabel("0");
     kasaGracza = new QLabel(QString::number(player.getIloscZetonow()));
-    QLabel *kasaPoPostawiniu = new QLabel(QString::number((player.getIloscZetonow())));
+    kasaPoPostawieniu = new QLabel(QString::number((wskPlayer->getIloscZetonow())));
     QLabel *otworzNawias = new QLabel("(");
     QLabel *zamknijNawias = new QLabel(")");
     
@@ -264,7 +316,6 @@ void MainWindow::start_okna(gracz &gracz1, gracz &gracz2, gracz &gracz3, gracz &
 
     //suwak->setRange(0,player.getIloscZetonow());
     connect(suwak,SIGNAL(valueChanged(int)),kasaDoPostawienia,SLOT(setNum(int)));
-    connect(suwak,SIGNAL(valueChanged(int)),kasaPoPostawiniu,SLOT(update()));
 
 
 
@@ -281,7 +332,7 @@ void MainWindow::start_okna(gracz &gracz1, gracz &gracz2, gracz &gracz3, gracz &
 
     postawienieLay->addWidget(kasaGracza);
     postawienieLay->addWidget(otworzNawias);
-    postawienieLay->addWidget(kasaPoPostawiniu);
+    postawienieLay->addWidget(kasaPoPostawieniu);
     postawienieLay->addWidget(zamknijNawias);
 
     //leftLay->addSpacing(400);
@@ -304,6 +355,7 @@ void MainWindow::start_okna(gracz &gracz1, gracz &gracz2, gracz &gracz3, gracz &
 
     okno_gry->setLayout(lay);
     okno_gry->showMaximized();
+
 
 
 }
@@ -338,9 +390,20 @@ void pierwszaDecyzjaGracza(QSlider *_suwak,QPushButton *_obstaw, QPushButton *_p
 }
 
 
-void MainWindow::start_gry(gracz &gracz1, gracz &gracz2, gracz &gracz3, gracz &gracz4, talia &tal, krupier &krupier,gracz &player)
+void MainWindow::start_gry(gracz &gracz1, gracz &gracz2, gracz &gracz3, gracz &gracz4, talia &tal, krupier &_krupier,gracz &player)
 {
-    connect(obstaw,SIGNAL(clicked()),SLOT(obstawClicked()));
+
+    connect(czekaj,SIGNAL(clicked()),SLOT(czekajClicked()));
+    connect(obstaw,SIGNAL(clicked()),SLOT(obstawClicked()),Qt::DirectConnection);
+    connect(pasuj,SIGNAL(clicked()),SLOT(pasujClicked()));
+    connect(sprawdz,SIGNAL(clicked()),SLOT(sprawdzClicked()));
+    connect(przebij,SIGNAL(clicked(bool)),SLOT(przebijClicked()));
+//krupier.setStol(dajKarte(tal));karta1Stol->setText(krupier.getCardName());
+
+
+
+
+
 
 //    connect(obstaw,SIGNAL(clicked()),wPuli,SLOT(setNum(krupier.getIloscZetonow())));
 
@@ -349,16 +412,9 @@ void MainWindow::start_gry(gracz &gracz1, gracz &gracz2, gracz &gracz3, gracz &g
     karta1Gracza->setText(player.getCard1Name());
     karta2Gracza->setText(player.getCard2Name());
 
-
     pierwszaDecyzjaGracza(suwak,obstaw,pasuj,kasaGracza);
-
-    krupier.setStol(dajKarte(tal));
-    karta1Stol->setText(krupier.getCardName());
-    krupier.setStol(dajKarte(tal));
-    karta2Stol->setText(krupier.getCardName());
-    krupier.setStol(dajKarte(tal));
-    karta3Stol->setText(krupier.getCardName());
 
 
 }
+
 

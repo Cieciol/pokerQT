@@ -52,13 +52,19 @@ public:
     QPushButton *sprawdz;
     QPushButton *przebij;
     QLabel *kasaGracza;
+    QLabel *kasaPoPostawieniu;
     QLabel *karta1Gracza;
     QLabel *karta2Gracza;
     QSlider *suwak;
-
+    krupier krupier1;
+    talia tali;
     gracz *wskPlayer;
     krupier *wskKrupier;
+    gracz player;
+    talia *wskTalia;
 
+
+    bool obstawClick = 0;
 
 
     ~MainWindow();
@@ -68,14 +74,22 @@ private slots:
 
     void on_rozpocznij_gre_clicked();
     void on_ok_clicked();
+    void czekajClicked();
     void obstawClicked();
+    void pasujClicked();
+    void sprawdzClicked();
+    void przebijClicked();
+
+
+
 
 
 private:
     Ui::MainWindow *ui;
-    void start_gry(gracz &, gracz &, gracz &,gracz &, talia &, krupier &,gracz & );
+    void start_gry(gracz &, gracz &, gracz &, gracz &, talia &, krupier &, gracz & );
     void start_okna(gracz &, gracz &, gracz &,gracz &, talia, krupier &,gracz &);
     //void pierwsze_rozdanie(gracz &, gracz &, gracz &,gracz &, talia &,gracz &);
+    void rozdaj3KartyKrupierowi(krupier,talia);
 };
 
 #endif // MAINWINDOW_H

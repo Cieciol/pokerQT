@@ -94,10 +94,11 @@ QString gracz::getName()
 
 void gracz::obstaw(int postawione)
 {
-    QWidget *okna = new QWidget;
-    okna->show();
-    iloscZetonowGracza -= postawione;
+    this->iloscZetonowGracza -= postawione;
+
+
     krupier::iloscZetonowKrupiera += postawione;
+
 }
 
 int krupier::iloscZetonowKrupiera = 0;
