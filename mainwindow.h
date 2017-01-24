@@ -9,9 +9,9 @@
 #include <QLabel>
 #include <QPushButton>
 #include <QSlider>
-//#include "nadpisane_obiekty_qt.h"
 
-//tltlt
+
+
 
 namespace Ui {
 class MainWindow;
@@ -20,58 +20,34 @@ class MainWindow;
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
+//Q_OBJECT to makro pozwalające na używanie slotów sygnałów w każdej klasie w której go użyliśmy.
+//użycie makra powoduje wygenerowanie pliku moc_naszaNazwaPlikuWyjściowego który polecam sprawdzić po kompilacji
 
 public:
-    explicit MainWindow(QWidget *parent = 0);
+    explicit MainWindow(QWidget *parent = 0);//linijka automatycznie wygenerowana przez IDE
     QLineEdit* imiewsk;
-    QLabel* kasaGracza1;
-    QLabel* kasaGracza2;
-    QLabel* kasaGracza3;
-    QLabel* kasaGracza4;
-
-    QLabel* karta1Gracza1;
-    QLabel* karta2Gracza1;
-    QLabel* karta1Gracza2;
-    QLabel* karta2Gracza2;
-    QLabel* karta1Gracza3;
-    QLabel* karta2Gracza3;
-    QLabel* karta1Gracza4;
-    QLabel* karta2Gracza4;
-
-    QLabel* wPuli;
     QLabel* wygrywajacy;
-    QLabel *karta1Stol;
-    QLabel *karta2Stol;
-    QLabel *karta3Stol;
-    QLabel *karta4Stol;
-    QLabel *karta5Stol;
-
-    QPushButton *czekaj;
-    QPushButton *obstaw;
-    QPushButton *pasuj;
-    QPushButton *sprawdz;
-    QPushButton *przebij;
     QLabel *kasaGracza;
     QLabel *kasaPoPostawieniu;
-    QLabel *karta1Gracza;
-    QLabel *karta2Gracza;
     QSlider *suwak;
-    krupier krupier1;
-    talia tali;
-    gracz *wskPlayer;
-    krupier *wskKrupier;
-    gracz player;
-    talia *wskTalia;
+    Krupier krupier1;
+    Talia tali;
+    Gracz *wskPlayer;
+    Krupier *wskKrupier;
+    Gracz player;
+    Gracz gracz1;
+    Gracz gracz2;
+    Gracz gracz3;
+    Gracz gracz4;
+    int turaGry;
 
-
-    bool obstawClick = 0;
 
 
     ~MainWindow();
 
 
 private slots:
-
+//w slotach wstawiłem funkcjonalności przycisków
     void on_rozpocznij_gre_clicked();
     void on_ok_clicked();
     void czekajClicked();
@@ -86,10 +62,16 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-    void start_gry(gracz &, gracz &, gracz &, gracz &, talia &, krupier &, gracz & );
-    void start_okna(gracz &, gracz &, gracz &,gracz &, talia, krupier &,gracz &);
-    //void pierwsze_rozdanie(gracz &, gracz &, gracz &,gracz &, talia &,gracz &);
-    void rozdaj3KartyKrupierowi(krupier,talia);
+    void start_gry();
+    void start_okna();
+    void rozdajKartyKrupierowi();
+    void pierwszeRozdanie();
+    void decyzjaSI();
+    void uruchomPrzyciski();
+    void wylaczPrzyciski();
+    Gracz wylonWygranego();
+    void dokonczTure();
+    void sprzatanie();
 };
 
 #endif // MAINWINDOW_H
