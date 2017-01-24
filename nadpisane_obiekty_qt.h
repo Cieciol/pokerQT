@@ -4,6 +4,14 @@
 #include <QObject>
 #include <QPushButton>
 
+/*
+ * pierwotnie w aplikacji problem przesyłania zmiennych do funkcji
+ * chciałem rozwiązać pisząc własne klasy z przyciskami i wewnątrz tych
+ * klas dodać odpowiednie pola tak jak widać w poniższej próbie
+ * ale problemy z kompilacją mnie przerosły i porzuciłem ten pomysł
+ *
+*/
+
 class nadpisane_obiekty_QT
 {
 public:

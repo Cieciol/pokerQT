@@ -1,6 +1,12 @@
 #ifndef MOJ_POKER_H
 #define MOJ_POKER_H
 #include <QObject>
+#include <QtCore>
+#include <QtGui>
+#include <QLabel>
+#include <QPushButton>
+#include <QSlider>
+
 
 class moj_poker
 {
@@ -8,8 +14,10 @@ public:
     moj_poker();
 };
 
+//plik ten zawiera moje własne klasyodpowiedzialne za główny szkielet gry
+//pusta klasa moj poker jest tu dlatego że wolę mieć kilka związanych ze sobą klas w jednym miejscu a IDE Qt miało problemy z namespace
 
-class karta
+class Karta
 {
 public:
     QString figura;
@@ -18,26 +26,26 @@ public:
 };
 
 
-class talia
+class Talia
 {
-    karta t[52];//tablica kart
+    Karta t[52];//tablica kart
     int iloscKart;
 public:
-    talia();
-    friend void tasuj(talia &);
-    friend karta dajKarte(talia &);
-    friend void pierwszeRozdanie(talia &);
+    Talia();
+    friend void tasuj(Talia &);
+    friend Karta dajKarte(Talia &);
+    friend void pierwszeRozdanie(Talia &);
 };
 
 
-class gracz : public QObject
+class Gracz
 {
-Q_OBJECT
+
 
 private:
 
-    karta card1;
-    karta card2;
+    Karta card1;
+    Karta card2;
     QString name;
     bool isComputer;
     int iloscZetonowGracza;
@@ -45,33 +53,54 @@ private:
 
 
 public:
-    gracz(QString = "Computer", bool = true, int = 5000);
+    Gracz(QString = "Computer", bool = true, int = 5000);
+    Gracz(const Gracz &); //funkcja przelej zetony wymagała ode mnie takiego konstuktora
     QString getCard1Name();
     QString getCard2Name();
     QString getName();
     int getIloscZetonow();
-    void setCard1(karta card);
-    void setCard2(karta card);
-    void obstaw(int);
-    void podejmijDecyzje();
-public slots:
-    void obstawClicked(int postawione);
+    void setCard1(Karta card);
+    void setCard2(Karta card);
+    void obstawFun(int);
+    void podejmijDecyzje(int tura);
+    void setName(QString);
+    void setIloscZetonow(int);
+    bool wGrze = true;
+
+    QLabel kasaGracza;
+    QLabel karta1Gracza;
+    QLabel karta2Gracza;
+    QLabel imieGracza;
+    QLabel decyzja;
+    QPushButton czekaj;
+    QPushButton obstaw;
+    QPushButton pasuj;
+    QPushButton sprawdz;
+    QPushButton przebij;
 
 
 };
 
-class krupier
+class Krupier
 {
-    karta stol[5];
+    Karta stol[5];
     static int iloscZetonowKrupiera;
     int iloscKartNaStole;
 
 public:
-    krupier();
+    Krupier();
+    Krupier(const Krupier &);
     int getIloscZetonow();
-    friend void gracz::obstawClicked(int postawione);//sloty można zaprzyjaziniać z innymi klasami jak funkcje
-    void setStol(karta card);
+    friend void Gracz::obstawFun(int);//sloty można zaprzyjaziniać z innymi klasami jak funkcje
+    void setStol(Karta card);
+    void wyzerujZetony();
     QString getCardName();
+    QLabel wPuli;
+    QLabel karta1Stol;
+    QLabel karta2Stol;
+    QLabel karta3Stol;
+    QLabel karta4Stol;
+    QLabel karta5Stol;
 
 };
 

@@ -24,7 +24,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>PushButton</string>
+     <string>Opuść Grę</string>
     </property>
    </widget>
    <widget class="QPushButton" name="rozpocznij_gre">
@@ -37,7 +37,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>PushButton</string>
+     <string>Nowa Gra</string>
     </property>
    </widget>
    <widget class="QLabel" name="label">
