@@ -113,6 +113,41 @@ void MainWindow::start_okna()//przykład stworzenia rozbudowanego okna bez użyc
 {
 
     QWidget *okno_gry = new QWidget;
+//    QFile styleFile(":/Styles/files/style.qss");
+//    styleFile.open(QIODevice::ReadOnly | QIODevice::Text);
+//    okno_gry->setStyleSheet(styleFile.readAll());
+//    okno_gry->setStyleSheet(
+//                //szata graficzna gry
+//                "QWidget {"
+//                    "color : black;"
+//                    "background-color : green}"
+//                "QPushButton{"
+//                    "background-color: red;"
+//                    "border-style: outset;"
+//                    "border-width: 2px;"
+//                    "border-radius: 5px;"
+//                    "border-color: beige;"
+//                    "font: bold 14px;"
+//                    "min-width: 10em;"
+//                    "padding: 6px;"
+//                "}"
+//            "QPushButton:pressed {"
+//                "background-color: rgb(224, 0, 0);"
+//                "border-style: inset;"
+//            "}"
+//            "QGroupBox {"
+//                "background-color: rgb(200, 0, 0);"
+//                "border-style: outset;"
+//                "border-width: 2px;"
+//                "border-radius: 5px;"
+//                "border-color: beige;"
+//                "min-width: 10em;"
+//                "padding: 6px;"
+//             "}"
+//            ""
+//                );
+
+
     QGridLayout *lay = new QGridLayout;
 
     QHBoxLayout *graczeLayout = new QHBoxLayout;
@@ -229,7 +264,7 @@ void MainWindow::start_okna()//przykład stworzenia rozbudowanego okna bez użyc
 
     suwak = new QSlider;
     QSpacerItem *gornaPrzestrzen = new QSpacerItem(1,200,QSizePolicy::Minimum,QSizePolicy::Ignored);
-    QSpacerItem *dolnaPrzestrzen = new QSpacerItem(1,27);
+    QSpacerItem *dolnaPrzestrzen = new QSpacerItem(1,37);
     suwak->setMinimumHeight(200);
     suwak->setMaximumHeight(250);
 

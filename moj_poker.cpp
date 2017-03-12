@@ -105,8 +105,12 @@ Gracz::Gracz(QString imie, bool czyKomputer, int kasa)
     decyzja.setText("0");
 }
 
-Gracz::Gracz(const Gracz &)
+Gracz::Gracz(const Gracz &_gracz)
 {
+    name = _gracz.name;
+    isComputer = _gracz.isComputer;
+    iloscZetonowGracza =_gracz.iloscZetonowGracza;
+
 
 }
 

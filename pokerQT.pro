@@ -15,13 +15,16 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     moj_poker.cpp \
-    nadpisane_obiekty_QT.cpp \
 
 
 HEADERS  += mainwindow.h \
     moj_poker.h \
-    nadpisane_obiekty_QT.h \
 
 
 FORMS    += mainwindow.ui
+
+DISTFILES +=
+
+RESOURCES += \
+    resources.qrc
 

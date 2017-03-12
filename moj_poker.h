@@ -54,7 +54,7 @@ private:
 
 public:
     Gracz(QString = "Computer", bool = true, int = 5000);
-    Gracz(const Gracz &); //funkcja przelej zetony wymagała ode mnie takiego konstuktora
+    Gracz(const Gracz &_gracz); //funkcja przelej zetony wymagała ode mnie takiego konstuktora, konstruktor kopiujący bo mam w klasie wskazniki
     QString getCard1Name();
     QString getCard2Name();
     QString getName();

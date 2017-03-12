@@ -4,6 +4,7 @@
 #include <QtCore>
 #include <QPushButton>
 #include <QTime>
+#include <QFile>
 
 //kod wygenerowany przez QT odpowiada za start aplikacji
 
@@ -13,6 +14,13 @@ int main(int argc, char *argv[])
 
     QApplication a(argc, argv);
     MainWindow *w = new MainWindow;
+
+    QFile styleFile(":/files/style.qss");
+    if(styleFile.open(QIODevice::ReadOnly | QIODevice::Text))
+        return -1;
+        //QString style(styleFile.readAll());
+        a.setStyleSheet(styleFile.readAll());
+        styleFile.close();
         w->setWindowTitle("Menu");//dopisana przeze mnie linijka, wiadomo co robi
 
     w->show();

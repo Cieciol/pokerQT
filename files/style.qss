@@ -1,0 +1,26 @@
+QWidget {
+    color : black;
+    background-color : green};
+QPushButton{
+    background-color: red;
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 5px;
+    border-color: beige;
+    font: bold 14px;
+    min-width: 10em;
+    padding: 6px;
+}
+QPushButton:pressed {
+    background-color: rgb(224, 0, 0);
+    border-style: inset;
+}
+QGroupBox {
+    background-color: rgb(200, 0, 0);
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 5px;
+    border-color: beige;
+    min-width: 10em;
+    padding: 6px;
+}
